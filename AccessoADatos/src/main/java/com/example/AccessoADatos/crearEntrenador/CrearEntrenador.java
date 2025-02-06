@@ -45,7 +45,7 @@ public class CrearEntrenador {
             System.out.println("--------------------------------");
             System.out.println("Para las nacionalidaes tienes las siguientes: ");
             System.out.println("--------------------------------");
-            List<String> listaPaises = MetodosCrearEntrenador.cargarNombresDePaises("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/crearEntrenador/paises.xml");
+            List<String> listaPaises = MetodosCrearEntrenador.cargarNombresDePaises("src/main/java/com/example/AccessoADatos/crearEntrenador/paises.xml");
             System.out.println(listaPaises);
             System.out.println("--------------------------------");
             System.out.print("Dame una nacionalidad: ");
@@ -82,19 +82,19 @@ public class CrearEntrenador {
 
        
             MetodosCrearEntrenador entrenador = new MetodosCrearEntrenador();
-            long id = entrenador.obtenerUltimoIdEntrenador("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt","ET");
+            long id = entrenador.obtenerUltimoIdEntrenador("src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt","ET");
             if(id == 0){
                 id = 1000;
             }
             id += 1;
 
-            if (!MetodosCrearEntrenador.verificarCredenciales("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt",nombre,contra,"ET")){
+            if (!MetodosCrearEntrenador.verificarCredenciales("src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt",nombre,contra,"ET")){
 
                 System.out.print("En que torneo te encuentras entre estos: ");
-                System.out.println(MetodosCrearEntrenador.obtenerNombresDesdeArchivo("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/ficheros/torneo.dat"));
+                System.out.println(MetodosCrearEntrenador.obtenerNombresDesdeArchivo("src/main/java/com/example/AccessoADatos/ficheros/torneo.dat"));
                 String torneo = sc.next();
 
-                if (MetodosCrearEntrenador.buscarNombreTorneo("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/ficheros/torneo.dat",torneo)){
+                if (MetodosCrearEntrenador.buscarNombreTorneo("src/main/java/com/example/AccessoADatos/ficheros/torneo.dat",torneo)){
 
                     System.out.println("--------------------------------");
                     System.out.println("Existe el torneo");
@@ -104,7 +104,7 @@ public class CrearEntrenador {
 
 
 
-                    long a = entrenador.sacarIdTorneo("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/ficheros/torneo.dat",torneo);
+                    long a = entrenador.sacarIdTorneo("src/main/java/com/example/AccessoADatos/ficheros/torneo.dat",torneo);
                     
                     Torneo torneoBD = torneoService.buscarTorneoPorId(a);
                     Set<Entrenador> entrenadorSet = torneoBD.getEntrenadores();
@@ -125,7 +125,7 @@ public class CrearEntrenador {
                         carnetService.guardarCarnet(carnet);
 
                         MetodosCrearEntrenador metodosCrearEntrenador = new MetodosCrearEntrenador();
-                        metodosCrearEntrenador.escribirAlFinalDelTxtEntrenador("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt",entrenador1,contra);
+                        metodosCrearEntrenador.escribirAlFinalDelTxtEntrenador("src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt",entrenador1,contra);
 
 
                         System.out.println("Se crea todo en la base de datos y en credenciales.txt");

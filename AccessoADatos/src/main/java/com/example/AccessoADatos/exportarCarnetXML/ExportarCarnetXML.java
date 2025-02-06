@@ -70,7 +70,7 @@ public class ExportarCarnetXML {
 
 
 
-            crearXMLCarnet(carnet,"/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/xml/"+entrenador.getNombre().toUpperCase()+".xml", combatesFiltrados,torneo);
+            crearXMLCarnet(carnet,"src/main/java/com/example/AccessoADatos/xml/"+entrenador.getNombre().toUpperCase()+".xml", combatesFiltrados,torneo);
             System.out.println("Se ha exportado el carnet perfectamente.");
         }
 

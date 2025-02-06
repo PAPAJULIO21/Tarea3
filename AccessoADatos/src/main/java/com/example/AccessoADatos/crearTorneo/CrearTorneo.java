@@ -40,7 +40,7 @@ public class CrearTorneo {
         System.out.println("--------------------------------");
         MetodosCrearTorneo metodosCrearTorneo = new MetodosCrearTorneo();
 
-        if (!metodosCrearTorneo.existeTorneo("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/ficheros/torneo.dat",nombreTor,localidad)){
+        if (!metodosCrearTorneo.existeTorneo("src/main/java/com/example/AccessoADatos/ficheros/torneo.dat",nombreTor,localidad)){
             System.out.println("Para crear un torneo tienes que darme un Usuario de Administrador de Torneo y una Contraseña.");
             boolean pepe = false;
             String usu_AT = null;
@@ -66,7 +66,7 @@ public class CrearTorneo {
             }while (!pepe);
             System.out.println("--------------------------------");
 
-            int id_Todo = metodosCrearTorneo.obtenerUltimoIdTorneo("/Users/padrejulian/Documents/TrabajoFicheros/TrabajoFicheros/torneo.dat");
+            int id_Todo = metodosCrearTorneo.obtenerUltimoIdTorneo("src/main/java/com/example/AccessoADatos/ficheros/torneo.dat");
             
             id_Todo +=1;
             
@@ -74,7 +74,7 @@ public class CrearTorneo {
 
                 MetodosCrearTorneo admin = new MetodosCrearTorneo(usu_AT,contra_AT,"AT",id_Todo);
 
-                if (!admin.existeEnFichero("/Users/padrejulian/Documents/TrabajoFicheros/TrabajoFicheros/credenciales.txt","AT")){
+                if (!admin.existeEnFichero("src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt","AT")){
                     
                 	Torneo torneo = new Torneo();               
                 	torneo.setNombre(nombreTor);
@@ -84,8 +84,8 @@ public class CrearTorneo {
                 	torneoService.guardarTorneo(torneo);
                 	Torneo torneoCreado = torneoService.buscarTorneoPorId(torneo.getId());
                 	
-                    metodosCrearTorneo.guardarSiNoExisteConDatos("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/ficheros/torneo.dat",torneoCreado,usu_AT);
-                    admin.guardarSiNoExiste("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt","AT",torneoCreado.getId());
+                    metodosCrearTorneo.guardarSiNoExisteConDatos("src/main/java/com/example/AccessoADatos/ficheros/torneo.dat",torneoCreado,usu_AT);
+                    admin.guardarSiNoExiste("src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt","AT",torneoCreado.getId());
                     System.out.println("El torneo se ha creado perfectamente.");
                     System.out.println("--------------------------------");
                     System.out.println("Vamos a crear los combates");

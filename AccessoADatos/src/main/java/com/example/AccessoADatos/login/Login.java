@@ -41,8 +41,8 @@ public class Login {
     String contra = sc.next();
     System.out.println("--------------------------------");
     MetodosLogin metodosLogin = new MetodosLogin();
-    if (MetodosLogin.buscarNombreYContraseña("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt",usu,contra)){
-        String per = MetodosLogin.buscarNombreYContraseñaYSacarPerfil("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt",usu,contra);
+    if (MetodosLogin.buscarNombreYContraseña("src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt",usu,contra)){
+        String per = MetodosLogin.buscarNombreYContraseñaYSacarPerfil("src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt",usu,contra);
         while (true) { // Este bucle asegura que el menú se repita hasta que el usuario elija salir
             switch (per) {
                 case "AG":
@@ -68,7 +68,7 @@ public class Login {
                     break; // Sale del caso "AG" para reiniciar desde el menú principal
 
                 case "AT":
-                    String i = MetodosLogin.buscarNombreYContraseñaYSacarId("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt", usu, contra);
+                    String i = MetodosLogin.buscarNombreYContraseñaYSacarId("src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt", usu, contra);
                     System.out.println("--------------------------------");
                     System.out.println("Como Administrador de Torneo puedes hacer lo siguiente: ");
                     System.out.println("--------------------------------");
@@ -101,7 +101,7 @@ public class Login {
                     break; // Sale del caso "AT" para reiniciar desde el menú principal
 
                 case "ET":
-                    String id = MetodosLogin.buscarNombreYContraseñaYSacarId("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt", usu, contra);
+                    String id = MetodosLogin.buscarNombreYContraseñaYSacarId("src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt", usu, contra);
                     System.out.println("--------------------------------");
                     System.out.println("Como Entrenador puedes hacer lo siguiente: ");
                     System.out.println("--------------------------------");

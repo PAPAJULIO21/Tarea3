@@ -69,7 +69,7 @@ public class ExportarDatosTorneo {
         String siNo = sc.next();
         if(siNo.equalsIgnoreCase("si")|| siNo.equalsIgnoreCase("s")){
             MetodosExportarTorneo metodosExportarTorneo = new MetodosExportarTorneo();
-            MetodosExportarTorneo.escribirEnArchivo("/Users/padrejulian/Documents/TrabajoFicheros/AccessoADatos/src/main/java/com/example/AccessoADatos/datosTorneo/"+torneo.getNombre().toUpperCase()+".txt",torneo,listaEntrenadores,listaCombates);
+            MetodosExportarTorneo.escribirEnArchivo("src/main/java/com/example/AccessoADatos/datosTorneo/"+torneo.getNombre().toUpperCase()+".txt",torneo,listaEntrenadores,listaCombates);
         }else{
             System.out.println("No se exportara a un fichero txt.");
         }
