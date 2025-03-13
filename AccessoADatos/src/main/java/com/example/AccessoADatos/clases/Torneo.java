@@ -20,16 +20,19 @@ public class Torneo {
 
     @ManyToMany(mappedBy = "torneos", fetch = FetchType.EAGER)
     private Set<Entrenador> entrenadores = new HashSet<>();
+    
+    private Long ganadorTorneo;
 
 
     public Torneo() {}
 
-    public Torneo(String nombre, char codRegion, int puntosVictoria, Set<Combate> combates, Set<Entrenador> entrenadores) {
+    public Torneo(String nombre, char codRegion, int puntosVictoria, Set<Combate> combates, Set<Entrenador> entrenadores,Long idENtrenadorGanador) {
         this.nombre = nombre;
         this.codRegion = codRegion;
         this.puntosVictoria = puntosVictoria;
         this.combates = combates;
         this.entrenadores = entrenadores;
+        this.ganadorTorneo = idENtrenadorGanador;
 
     }
 
@@ -88,9 +91,18 @@ public class Torneo {
         entrenador.getTorneos().add(this); // Establece la relación bidireccional
     }
 
+    
 
 
-    @Override
+    public Long getGanadorTorneo() {
+		return ganadorTorneo;
+	}
+
+	public void setGanadorTorneo(Long ganadorTorneo) {
+		this.ganadorTorneo = ganadorTorneo;
+	}
+
+	@Override
     public String toString() {
         return "Torneo{" +
                 "id=" + id +

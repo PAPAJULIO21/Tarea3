@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS combate;
+DROP TABLE IF EXISTS carnet;
+DROP TABLE IF EXISTS participacion;
+DROP TABLE IF EXISTS entrenador;
+DROP TABLE IF EXISTS torneo;

@@ -9,6 +9,8 @@ import java.util.Set;
 
 import com.example.AccessoADatos.clases.*;
 import com.example.AccessoADatos.crearEntrenador.MetodosCrearEntrenador;
+import com.example.AccessoADatos.db4o.Usuario;
+import com.example.AccessoADatos.db4o.UsuariosDb4o;
 import com.example.AccessoADatos.service.*;
 
 
@@ -126,9 +128,11 @@ public class CrearEntrenador {
 
                         MetodosCrearEntrenador metodosCrearEntrenador = new MetodosCrearEntrenador();
                         metodosCrearEntrenador.escribirAlFinalDelTxtEntrenador("src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt",entrenador1,contra);
+                        Usuario usuario = new Usuario(nombre,contra,"ET",entrenador1.getId());
+                        UsuariosDb4o usuariosDb4o = new UsuariosDb4o();
+                        usuariosDb4o.agregarUsuario(usuario);
 
-
-                        System.out.println("Se crea todo en la base de datos y en credenciales.txt");
+                        System.out.println("Se crea todo en la base de datos y en usuarios.db4o");
 
                     }else {
                         System.out.println("No se puede crear mas entrenadores para este Torneo");

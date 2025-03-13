@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import com.example.AccessoADatos.crearTorneo.CrearTorneo;
+import com.example.AccessoADatos.db4o.Usuario;
+import com.example.AccessoADatos.db4o.UsuariosDb4o;
 import com.example.AccessoADatos.exportarCarnetXML.ExportarCarnetXML;
 import com.example.AccessoADatos.exportarDatosTorneo.ExportarDatosTorneo;
 import com.example.AccessoADatos.inscribir.Inscribir;
@@ -34,39 +36,41 @@ public class Login {
 
 	public  void IniciarSesion() throws SQLException {
 
-	Scanner sc = new Scanner(System.in);
-    System.out.print("Dime tu usuario: ");
-    String usu = sc.next();
-    System.out.print("Dame tu contraseña: " );
-    String contra = sc.next();
-    System.out.println("--------------------------------");
-    MetodosLogin metodosLogin = new MetodosLogin();
-    if (MetodosLogin.buscarNombreYContraseña("src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt",usu,contra)){
-        String per = MetodosLogin.buscarNombreYContraseñaYSacarPerfil("src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt",usu,contra);
-        while (true) { // Este bucle asegura que el menú se repita hasta que el usuario elija salir
-            switch (per) {
-                case "AG":
-                    System.out.println("--------------------------------");
-                    System.out.println("Como Administrador General puedes hacer lo siguiente: ");
-                    System.out.println("--------------------------------");
-                    System.out.println("1- Crear un nuevo Torneo\n" +
-                                       "2- Salir");
-                    System.out.println("--------------------------------");
-                    int num = sc.nextInt();
-                    System.out.println("--------------------------------");
-                    switch (num) {
-                        case 1:
-                        	CrearTorneo crearTorneo = new CrearTorneo(service,combateService);
-                            crearTorneo.crearTorneo(); // Ejecuta el método
-                            break; // Regresa al menú de "AG"
-                        case 2:
-                            return; // Sale del programa o del menú principal
-                        default:
-                            System.out.println("Opción no válida. Por favor, intenta de nuevo.");
-                            break;
-                    }
-                    break; // Sale del caso "AG" para reiniciar desde el menú principal
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Dime tu usuario: ");
+        String usu = sc.next();
+        System.out.print("Dame tu contraseña: ");
+        String contra = sc.next();
+        System.out.println("--------------------------------");
 
+        if (usu.equalsIgnoreCase("pepe") && contra.equals("meca")) {
+            while (true) {
+                System.out.println("--------------------------------");
+                System.out.println("Como Administrador General puedes hacer lo siguiente: ");
+                System.out.println("--------------------------------");
+                System.out.println("1- Crear un nuevo Torneo\n" +
+                        "2- Salir");
+                System.out.println("--------------------------------");
+                int num = sc.nextInt();
+                System.out.println("--------------------------------");
+                switch (num) {
+                    case 1:
+                        CrearTorneo crearTorneo = new CrearTorneo(service, combateService);
+                        crearTorneo.crearTorneo(); // Ejecuta el método
+                        break; // Regresa al menú de "AG"
+                    case 2:
+                        return; // Sale del programa o del menú principal
+                    default:
+                        System.out.println("Opción no válida. Por favor, intenta de nuevo.");
+                        break;
+                }
+            }
+        }
+    UsuariosDb4o usuariosDb4o = new UsuariosDb4o();
+        Usuario usuario = usuariosDb4o.buscarUsuarioPorNombreYContraseña(usu,contra);
+    if (usuario != null){
+        while (true) { // Este bucle asegura que el menú se repita hasta que el usuario elija salir
+            switch (usuario.getPerfil()) {
                 case "AT":
                     String i = MetodosLogin.buscarNombreYContraseñaYSacarId("src/main/java/com/example/AccessoADatos/ficheros/credenciales.txt", usu, contra);
                     System.out.println("--------------------------------");
@@ -133,5 +137,6 @@ public class Login {
     }else{
         System.out.println("Mal introducido el usuario o la contraseña.");
     }
-	}
+
+    }
 }

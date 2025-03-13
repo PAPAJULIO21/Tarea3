@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
+import com.example.AccessoADatos.db4o.Usuario;
+import com.example.AccessoADatos.db4o.UsuariosDb4o;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -90,6 +92,9 @@ public class CrearTorneo {
                     System.out.println("--------------------------------");
                     System.out.println("Vamos a crear los combates");
                     System.out.println("--------------------------------");
+                    Usuario usuario = new Usuario(usu_AT,contra_AT,"AT",torneo.getId());
+                    UsuariosDb4o usuariosDb4o = new UsuariosDb4o();
+                    usuariosDb4o.agregarUsuario(usuario);
                     
                     LocalDate[] fechas = new LocalDate[3];  // Arreglo para almacenar las tres fechas
                     boolean fechaValida;

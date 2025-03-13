@@ -1,0 +1,5 @@
+PEPE meca AG 100
+uu uu AT 2
+mm mm ET 4
+rr rr ET 5
+qqq qq ET 6

@@ -1,9 +1,8 @@
 package com.example.AccessoADatos.pelear;
 
+
 import com.example.AccessoADatos.clases.Carnet;
 import com.example.AccessoADatos.clases.Combate;
-import java.util.Random;
-
 import com.example.AccessoADatos.clases.Entrenador;
 import com.example.AccessoADatos.clases.Torneo;
 import com.example.AccessoADatos.service.CarnetService;
@@ -11,10 +10,7 @@ import com.example.AccessoADatos.service.CombateService;
 import com.example.AccessoADatos.service.EntrenadorService;
 import com.example.AccessoADatos.service.TorneoService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Pelear {
 
@@ -23,7 +19,7 @@ public class Pelear {
     CarnetService carnetService;
     EntrenadorService entrenadorService;
 
-    public Pelear(CombateService combateService,TorneoService torneoService,CarnetService carnetService,EntrenadorService entrenadorService){
+    public Pelear(CombateService combateService, TorneoService torneoService, CarnetService carnetService, EntrenadorService entrenadorService) {
         this.combateService = combateService;
         this.torneoService = torneoService;
         this.entrenadorService = entrenadorService;
@@ -42,7 +38,7 @@ public class Pelear {
         Set<Combate> combates = torneo.getCombates();
         List<Combate> listaCombates = new ArrayList<>(combates);
 
-        if (listaCombates.get(0).getGanador()!= null){
+        if (listaCombates.get(0).getGanador() != null) {
             System.out.println("Ya han peleado en este Torneo.");
             return;
         }
@@ -51,6 +47,9 @@ public class Pelear {
         if (todosCombatesConEntrenadores(listaCombates)) {
             System.out.println("Todos los combates tienen ambos entrenadores asignados.");
             System.out.println("Determinando ganadores de forma aleatoria...");
+
+            // Mapa para contar las victorias de cada entrenador
+            Map<Long, Integer> victoriasPorEntrenador = new HashMap<>();
 
             // Recorrer la lista de combates y asignar un ganador aleatorio
             Random random = new Random();
@@ -69,6 +68,9 @@ public class Pelear {
                     System.out.println("En el combate " + combate.getId() + " gana el entrenador: " + ganador.getNombre());
                 }
 
+                // Contar las victorias del entrenador
+                victoriasPorEntrenador.put(ganador.getId(), victoriasPorEntrenador.getOrDefault(ganador.getId(), 0) + 1);
+
                 // Obtener el carnet del ganador
                 Carnet carnetGanador = carnetService.buscarCarnetPorId(ganador.getId());
 
@@ -85,6 +87,17 @@ public class Pelear {
                 // Guardar el combate actualizado en la base de datos
                 combateService.guardarCombate(combate);
             }
+
+            // Determinar el ganador del torneo
+            Entrenador ganadorTorneo = determinarGanadorTorneo(victoriasPorEntrenador);
+            
+            torneo.setGanadorTorneo(ganadorTorneo.getId());
+            if (ganadorTorneo != null) {
+                System.out.println("El ganador del torneo es: " + ganadorTorneo.getNombre());
+            } else {
+                System.out.println("No se pudo determinar un ganador del torneo.");
+            }
+
         } else {
             System.out.println("Algunos combates no tienen ambos entrenadores asignados.");
             // Aquí puedes manejar el caso en que falten entrenadores
@@ -98,5 +111,19 @@ public class Pelear {
             }
         }
         return true; // Si todos los combates tienen ambos entrenadores, retorna true
+    }
+
+    private Entrenador determinarGanadorTorneo(Map<Long, Integer> victoriasPorEntrenador) {
+        Entrenador ganador = null;
+        int maxVictorias = 0;
+
+        for (Map.Entry<Long, Integer> entry : victoriasPorEntrenador.entrySet()) {
+            if (entry.getValue() > maxVictorias) {
+                maxVictorias = entry.getValue();
+                ganador = entrenadorService.buscarEntrenadorPorId(entry.getKey());
+            }
+        }
+
+        return ganador;
     }
 }
