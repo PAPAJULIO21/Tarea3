@@ -105,10 +105,10 @@ public class Torneo {
 	@Override
     public String toString() {
         return "Torneo{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
+
+                "nombre='" + nombre + '\'' +
                 ", codRegion=" + codRegion +
-                ", puntosVictoria=" + puntosVictoria +
+                ", puntosVictoria=" + puntosVictoria +", gandor="+ganadorTorneo+
                 '}';
     }
 }

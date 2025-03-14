@@ -6,6 +6,7 @@ import com.db4o.ObjectSet;
 import com.db4o.query.Query;
 import com.example.AccessoADatos.clases.Torneo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsuariosDb4o {
@@ -30,18 +31,45 @@ public class UsuariosDb4o {
             db.close();
         }
     }
-
-    public  Usuario buscarUsuariosPorNombre(String nombre) {
+    public void actualizarUsuario(Usuario usuarioAntiguo, Usuario usuarioNuevo) {
         ObjectContainer db = Db4oEmbedded.openFile(DB_FILE);
+
         try {
-            Query query = db.query();
-            query.constrain(Torneo.class);
-            query.descend("nombre").constrain(nombre);
-            ObjectSet<Usuario> resultado = query.execute();
-            return resultado.isEmpty() ? null : resultado.next();
+            ObjectSet<Usuario> resultado = db.queryByExample(usuarioAntiguo);
+
+            if (!resultado.isEmpty()) {
+                while (resultado.hasNext()) {
+                    Usuario usuarioEncontrado = resultado.next();
+                    db.delete(usuarioEncontrado);  // Eliminamos el usuario antiguo
+                    db.store(usuarioNuevo);  // Guardamos el usuario nuevo
+                    System.out.println("Usuario actualizado: " + usuarioNuevo.getNombre());
+                }
+            } else {
+                System.out.println("Usuario no encontrado.");
+            }
         } finally {
             db.close();
         }
+    }
+
+    public List<Usuario> buscarUsuariosPorPerfil(String perfil) {
+        ObjectContainer db = Db4oEmbedded.openFile(DB_FILE);
+        List<Usuario> listaUsuarios = new ArrayList<>();
+
+        try {
+            Query query = db.query();
+            query.constrain(Usuario.class);  // Corrige la clase que se está buscando
+            query.descend("perfil").constrain(perfil);
+            ObjectSet<Usuario> resultado = query.execute();
+
+            while (resultado.hasNext()) {
+                listaUsuarios.add(resultado.next());
+            }
+        } finally {
+            db.close();
+        }
+
+        return listaUsuarios;
     }
     public Usuario buscarUsuarioPorNombreYContraseña(String nombre, String contraseña) {
         ObjectContainer db = Db4oEmbedded.openFile(DB_FILE);
@@ -57,16 +85,27 @@ public class UsuariosDb4o {
         }
     }
 
-    public  void actualizarUsuario(String nombre, Usuario usuarioActualizado) {
+
+    public void eliminarUsuario(String nombre, String contrasena, String perfil) {
         ObjectContainer db = Db4oEmbedded.openFile(DB_FILE);
+
         try {
-            Usuario torneo = buscarUsuariosPorNombre(nombre);
-            if (torneo != null) {
-                db.delete(torneo);
-                db.store(usuarioActualizado);
-                System.out.println("Usuario actualizado: " + usuarioActualizado);
+            Query query = db.query();
+            query.constrain(Usuario.class);
+            query.descend("nombre").constrain(nombre);
+            query.descend("contra").constrain(contrasena);
+            query.descend("perfil").constrain(perfil);
+
+            ObjectSet<Usuario> resultado = query.execute();
+
+            if (!resultado.isEmpty()) {
+                while (resultado.hasNext()) {
+                    Usuario usuarioAEliminar = resultado.next();
+                    db.delete(usuarioAEliminar);
+                    System.out.println("Usuario eliminado: " + usuarioAEliminar.getNombre());
+                }
             } else {
-                System.out.println("Usuario no encontrado");
+                System.out.println("Usuario no encontrado o credenciales incorrectas.");
             }
         } finally {
             db.close();

@@ -3,14 +3,15 @@ package com.example.AccessoADatos.login;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import com.example.AccessoADatos.consultasTorneo.ConsultasTorneo;
 import com.example.AccessoADatos.crearTorneo.CrearTorneo;
 import com.example.AccessoADatos.db4o.Usuario;
 import com.example.AccessoADatos.db4o.UsuariosDb4o;
 import com.example.AccessoADatos.exportarCarnetXML.ExportarCarnetXML;
 import com.example.AccessoADatos.exportarDatosTorneo.ExportarDatosTorneo;
+import com.example.AccessoADatos.gestionUsuarios.Menu;
 import com.example.AccessoADatos.inscribir.Inscribir;
 import com.example.AccessoADatos.pelear.Pelear;
-import com.example.AccessoADatos.repository.CombateRepository;
 import com.example.AccessoADatos.service.CarnetService;
 import com.example.AccessoADatos.service.CombateService;
 import com.example.AccessoADatos.service.EntrenadorService;
@@ -49,7 +50,9 @@ public class Login {
                 System.out.println("Como Administrador General puedes hacer lo siguiente: ");
                 System.out.println("--------------------------------");
                 System.out.println("1- Crear un nuevo Torneo\n" +
-                        "2- Salir");
+                        "2- Consultas Torneos \n" +
+                        "3- Gestión de Usuarios\n"+
+                        "4- Salir");
                 System.out.println("--------------------------------");
                 int num = sc.nextInt();
                 System.out.println("--------------------------------");
@@ -59,6 +62,14 @@ public class Login {
                         crearTorneo.crearTorneo(); // Ejecuta el método
                         break; // Regresa al menú de "AG"
                     case 2:
+                        ConsultasTorneo consultasTorneo = new ConsultasTorneo(entrenadorService,carnetService);
+                        consultasTorneo.consultas();
+                        break;
+                    case 3:
+                        Menu menu = new Menu();
+                        menu.menuGestion();
+                        break;
+                    case 4:
                         return; // Sale del programa o del menú principal
                     default:
                         System.out.println("Opción no válida. Por favor, intenta de nuevo.");

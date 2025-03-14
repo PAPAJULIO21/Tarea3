@@ -5,10 +5,13 @@ import com.example.AccessoADatos.clases.Carnet;
 import com.example.AccessoADatos.clases.Combate;
 import com.example.AccessoADatos.clases.Entrenador;
 import com.example.AccessoADatos.clases.Torneo;
+import com.example.AccessoADatos.mongoConexion.ConexionMongo;
+import com.example.AccessoADatos.mongoDao.TorneoDao;
 import com.example.AccessoADatos.service.CarnetService;
 import com.example.AccessoADatos.service.CombateService;
 import com.example.AccessoADatos.service.EntrenadorService;
 import com.example.AccessoADatos.service.TorneoService;
+import com.mongodb.client.MongoDatabase;
 
 import java.util.*;
 
@@ -92,6 +95,13 @@ public class Pelear {
             Entrenador ganadorTorneo = determinarGanadorTorneo(victoriasPorEntrenador);
             
             torneo.setGanadorTorneo(ganadorTorneo.getId());
+
+            ConexionMongo conexionMongo = new ConexionMongo();
+            MongoDatabase mongoDatabase = conexionMongo.getDatabase();
+            TorneoDao torneoDao = new TorneoDao(mongoDatabase);
+
+            torneoDao.guardarTorneo(torneo);
+
             if (ganadorTorneo != null) {
                 System.out.println("El ganador del torneo es: " + ganadorTorneo.getNombre());
             } else {
