@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<carnet>
+    <id>4</id>
+    <fechaexp>16-03-2025</fechaexp>
+    <entrenador>
+        <nombre>xxx</nombre>
+        <nacionalidad>brasil</nacionalidad>
+    </entrenador>
+    <hoy>16-03-2025</hoy>
+    <puntos>10000</puntos>
+    <torneos>
+        <torneo>
+            <nombre>ppp</nombre>
+            <region>p</region>
+            <combates>
+                <combate>
+                    <id>5</id>
+                    <fecha>12-12-1231</fecha>
+                    <victoria>false</victoria>
+                </combate>
+                <combate>
+                    <id>4</id>
+                    <fecha>12-12-1231</fecha>
+                    <victoria>true</victoria>
+                </combate>
+            </combates>
+        </torneo>
+    </torneos>
+</carnet>

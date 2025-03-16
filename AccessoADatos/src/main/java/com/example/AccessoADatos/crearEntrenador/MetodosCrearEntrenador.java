@@ -35,6 +35,23 @@ public class MetodosCrearEntrenador {
 	        return ultimoId;
 	    }
 
+		public String obtenerNombreAdmin(String nombreFichero,String perfil) {
+			String ultimoId = null;
+			try (BufferedReader reader = new BufferedReader(new FileReader(nombreFichero))) {
+				String linea;
+				// Leer línea por línea y extraer el ID (se espera que el ID esté al principio de cada línea)
+				while ((linea = reader.readLine()) != null) {
+					String[] partes = linea.split(" ");
+					if (partes.length == 4 && partes[2].toUpperCase().equals(perfil)){
+						ultimoId = partes[0];
+					}
+				}
+			} catch (IOException e) {
+				System.out.println("Error al leer el fichero: " + e.getMessage());
+			}
+			return ultimoId;
+		}
+
 	    public static boolean buscarNombreTorneo(String nombreFichero, String nombreBuscado) {
 	        try (BufferedReader reader = new BufferedReader(new FileReader(nombreFichero))) {
 	            String linea;

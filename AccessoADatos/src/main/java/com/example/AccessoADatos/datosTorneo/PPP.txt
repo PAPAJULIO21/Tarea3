@@ -1,0 +1,7 @@
+Los datos de este Torneo son: Torneo{nombre='ppp', codRegion=p, puntosVictoria=10000, gandor=null}
+Los datos de los entrenadores son:
+Entrenador{nacionalidad='brasil', nombre='xxx', id=4, numVictorias= 1}
+Los datos de los combates son:
+Combate{id=5, fecha=1231-12-12, ganador=3}
+Combate{id=4, fecha=1231-12-12, ganador=4}
+Combate{id=6, fecha=1231-12-12, ganador=3}

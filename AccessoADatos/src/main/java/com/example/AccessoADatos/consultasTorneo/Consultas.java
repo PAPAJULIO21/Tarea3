@@ -94,6 +94,20 @@ public class Consultas {
         MongoDatabase mongoDatabase = conexionMongo.getDatabase();
         TorneoDao torneoDao = new TorneoDao(mongoDatabase);
 
+        List<Entrenador> entrenador = torneoDao.obtenerEntrenadoresConMasDeDosVictorias();
+        if (entrenador!= null){
+            System.out.println("Los Entrenadores que han ganado dos torneos o mas son:");
+            System.out.println("--------------------------------");
+            for (int i = 0; i < entrenador.size();i++ ){
+                System.out.println(entrenador.get(i).getNombre());
+            }
+            System.out.println("--------------------------------");
+        }else {
+            System.out.println("Ningun entrendor ha ganado dos o mas torneos");
+        }
+
+
+
     }
 
     public  void entrenadoresPuntos(){

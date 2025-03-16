@@ -8,7 +8,10 @@ import com.example.AccessoADatos.repository.TorneoRepository;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.w3c.dom.Document;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +34,10 @@ public class EntrenadorService {
 
         // Guarda el entrenador
         return entrenadorRepository.save(entrenador);
+    }
+
+    public List<Entrenador> obtenerTodosLosEntrenadores() {
+        return entrenadorRepository.findAll();
     }
     
     

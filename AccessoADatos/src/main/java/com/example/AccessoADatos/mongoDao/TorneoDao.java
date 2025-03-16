@@ -11,10 +11,7 @@ import org.bson.types.ObjectId;
 
 import com.example.AccessoADatos.clases.Torneo;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TorneoDao {
     private MongoCollection<Document> torneos;
@@ -52,6 +49,42 @@ public class TorneoDao {
 
         // Insertar en la colección
         torneos.insertOne(torneoDoc);
+    }
+    public List<Entrenador> obtenerEntrenadoresConMasDeDosVictorias() {
+        // Mapa para contar las victorias de cada entrenador
+        Map<Long, Integer> contadorVictorias = new HashMap<>();
+
+        // Recorremos todos los torneos y contamos las victorias por entrenador
+        for (Document torneoDoc : torneos.find()) {
+            Long ganadorId = torneoDoc.getLong("ganadorTorneo");
+            if (ganadorId != null) {
+                contadorVictorias.put(ganadorId, contadorVictorias.getOrDefault(ganadorId, 0) + 1);
+            }
+        }
+
+        // Filtramos entrenadores con más de 2 victorias
+        List<Entrenador> entrenadoresGanadores = new ArrayList<>();
+        for (Map.Entry<Long, Integer> entry : contadorVictorias.entrySet()) {
+            if (entry.getValue() > 2) {
+                // Buscar los datos del entrenador en la base de datos
+                for (Document torneoDoc : torneos.find()) {
+                    List<Document> entrenadoresDocs = torneoDoc.getList("entrenadores", Document.class);
+                    if (entrenadoresDocs != null) {
+                        for (Document doc : entrenadoresDocs) {
+                            if (doc.getLong("id").equals(entry.getKey())) {
+                                Entrenador entrenador = new Entrenador();
+                                entrenador.setId(doc.getLong("id"));
+                                entrenador.setNombre(doc.getString("nombre"));
+                                entrenadoresGanadores.add(entrenador);
+                                break; // Ya encontramos el entrenador, pasamos al siguiente
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return entrenadoresGanadores;
     }
     public Set<Entrenador> obtenerTodosLosEntrenadores() {
         Set<Entrenador> entrenadores = new HashSet<>();
